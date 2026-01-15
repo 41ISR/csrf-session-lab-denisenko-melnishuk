@@ -1,5 +1,5 @@
 ## Техническое задание для студентов
-https://orange-computing-machine-97jv5r4x56r9hpx54-5990.app.github.dev/
+https://prod.liveshare.vsengsaas.visualstudio.com/join?C3F76969EDFCFA7C0C0E342955CAD616C648
 ### Проект: То самое
 
 Вам дан мокап приложения, который вы должны переписать на React. В папке mockup лежит готовый проект, который можно пощупать (поднять через `npx live-server`) и в папке jsx лежит готовая верстка под React. Ваша задача разбить его на компоненты и написать логику.
