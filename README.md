@@ -1,7 +1,6 @@
 ## Техническое задание для студентов
-https://prod.liveshare.vsengsaas.visualstudio.com/join?C3F76969EDFCFA7C0C0E342955CAD616C648
 
-https://orange-computing-machine-97jv5r4x56r9hpx54-5173.app.github.dev/
+https://gist.github.com/sasha-melok/d214db5054ff4ec7f2dbc291cff24fad
 
 ### Проект: То самое
 

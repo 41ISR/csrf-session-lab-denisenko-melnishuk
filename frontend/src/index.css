@@ -12,7 +12,7 @@ body {
 }
 
 .screen {
-    display: none;
+    /* display: none; */
     min-height: 100vh;
     padding: 20px;
 }
@@ -55,6 +55,8 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s;
+    text-decoration: none;
+    text-align: center;
 }
 
 .tab-btn.active {
@@ -63,7 +65,7 @@ body {
 }
 
 .auth-form {
-    display: none;
+    /* display: none; */
 }
 
 .auth-form.active {
@@ -72,6 +74,10 @@ body {
 
 .form-group {
     margin-bottom: 20px;
+}
+
+.form-group.error {
+    color: #8b0000;
 }
 
 .form-group label {
