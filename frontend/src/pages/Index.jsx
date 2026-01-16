@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom"
+import {useNavigate, Link} from "react-router-dom"
 
 const Index = () => {
     const navigate = useNavigate()
@@ -17,12 +17,12 @@ const Index = () => {
                         <span className="balance">📊 [БАЛЛЫ] баллов</span>
                     </div>
                     <nav className="game-nav">
-                        <button className="nav-btn" >
+                        <Link to="/leaderboard" className="nav-btn" >
                             🏆 Рейтинг
-                        </button>
-                        <button onClick={handleLogout} className="nav-btn" >
+                        </Link>
+                        <Link to="/logout" onClick={handleLogout} className="nav-btn" >
                             Выход
-                        </button>
+                        </Link>
                     </nav>
                 </header>
                 <div className="slot-machine">

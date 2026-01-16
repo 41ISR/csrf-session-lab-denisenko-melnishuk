@@ -1,12 +1,17 @@
 import { create } from "zustand"
 
-export const useAuthStore = create((set, get) => ({
+const useAuthStore = create((set, get) => ({
     user: undefined,
     checkAuth: async () => {
         try {
-            const res = await fetch("https://effective-tribble-v6q4r975rv6vf6gvv-5173.app.github.dev//auth/me", {
+            const res = await fetch("https://effective-tribble-v6q4r975rv6vf6gvv-3000.app.github.dev/profile", {
+                method: "GET",
+                headers:{
+                    "Content-Type": "application/json"
+                },
                 credentials: "include"
             })
+            console.log(res)
 
             if (!res.ok) throw new Error(res.error)
 
@@ -23,3 +28,5 @@ export const useAuthStore = create((set, get) => ({
         set((state) => ({...state, user: undefined}))
     }
 }))
+
+export default useAuthStore

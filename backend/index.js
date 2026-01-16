@@ -15,8 +15,20 @@ const ERROR_MESSAGE = {
     regEmailExists: "Пользователь с такой почтой уже существует",
     regUsernameExists: "Пользователь с таким именем уже существует",
     unexcepted: "Произошла ошибка, попробуйте снова",
-
+    unauth: "Вы не вошли в аккаунт",
 }
+
+const PAYOUTS = {
+    '💯💯💯': 100,
+    '🎓🎓🎓': 50,
+    '🔥🔥🔥': 25,
+    '🧠🧠🧠': 15,
+    '📚📚📚': 10,
+    '✏️✏️✏️': 8,
+    '❌❌❌': 0,
+}
+
+const SYMBOLS = ['📚', '✏️', '🧠', '🎓', '🔥', '💯', '❌']
 
 // ---------- 
 // SET APP
@@ -59,6 +71,10 @@ const csrfMiddleware = csrf({
     }
 })
 
+const getResult = () => {
+    
+}
+
 // ----------
 // AUTH
 
@@ -88,7 +104,7 @@ app.post('/auth/signup', (req, res) => {
         const newUser = db.prepare(`
             SELECT * FROM users WHERE id = ?`).get(info.lastInsertRowid)
 
-        req.session.id = newUser.id
+        req.session.userId = newUser.id
         req.session.username = newUser.username
         req.session.email = newUser.email
         req.session.balance = newUser.balance
@@ -113,7 +129,7 @@ app.post('/auth/signin', (req, res) => {
         if(!user) throw new Error('wrong')
         if(!bcrypt.compareSync(password, user.password)) throw new Error('wrong')
 
-        req.session.id = user.id
+        req.session.userId = user.id
         req.session.username = user.username
         req.session.email = user.email
         req.session.balance = user.balance
@@ -136,6 +152,24 @@ app.post("/auth/logout", (req,res) => {
 })
 
 // ----------
+// OTHER ENDPOINTS
+
+app.get('/profile', (req, res) => {
+    try {
+        const {userId, username, email} = req.session
+        if (!userId) throw new Error('unauth')
+        
+        const user = db.prepare(`
+            SELECT * FROM users WHERE id = ?`).get(userId)
+
+        return res.status(200).json({id: userId, username: username, email: email, balance: user.balance})
+        
+    } catch (error) {
+        console.error(error);
+        if(error.message == 'unauth') return res.status(401).json({error: ERROR_MESSAGE.unauth})
+        else return res.status(400).json({error: ERROR_MESSAGE.unexcepted})
+    }
+})
 
 app.get('/leaderboard', (_, res) => {
     try {
@@ -149,7 +183,9 @@ app.get('/leaderboard', (_, res) => {
     }
 })
 
+app.post('/spin', (req, res) => {
 
+})
 
 // ----------
 
