@@ -39,7 +39,7 @@ const Leaderboard = () => {
     return (
         <div id="leaderboard-screen" className="screen">
         <div className="leaderboard-container">
-            <Link to="/" className="back-btn">
+            <Link to="/game" className="back-btn">
                 ← Назад к игре
             </Link>
             <h1>🏆 Рейтинг лучших 🏆</h1>

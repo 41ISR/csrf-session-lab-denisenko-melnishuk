@@ -1,9 +1,14 @@
 import {useNavigate, Link} from "react-router-dom"
+import useAuthStore from "../store/useAuthStore"
+import Button from "../components/Button"
+import GameScreen from "../components/GameScreen"
+import { useState } from "react"
 
 const Index = () => {
     const navigate = useNavigate()
+    const {user} = useAuthStore()
+    const [bet, setBet] = useState(10)
 
-    
     const handleLogout = () => {
         navigate("/logout")
     }
@@ -13,8 +18,8 @@ const Index = () => {
             <div className="game-container">
                 <header className="game-header">
                     <div className="user-info">
-                        <span className="username">Студент123</span>
-                        <span className="balance">📊 [БАЛЛЫ] баллов</span>
+                        <span className="username">{user.username}</span>
+                        <span className="balance">📊 {user.balance} баллов</span>
                     </div>
                     <nav className="game-nav">
                         <Link to="/leaderboard" className="nav-btn" >
@@ -25,83 +30,9 @@ const Index = () => {
                         </Link>
                     </nav>
                 </header>
-                <div className="slot-machine">
-                    <div className="slot-machine-header">
-                        <h2>🎲 [ПРИДУМАЙТЕ НАЗВАНИЕ ИГРЫ] 🎲</h2>
-                    </div>
-                    <div className="slots-container">
-                        <div className="slot-wrapper">
-                            <div className="slot" id="slot1">
-                                <div className="reel">
-                                    <div className="symbol">📚</div>
-                                    <div className="symbol">✏️</div>
-                                    <div className="symbol">🧠</div>
-                                    <div className="symbol">🎓</div>
-                                    <div className="symbol">🔥</div>
-                                    <div className="symbol">💯</div>
-                                    <div className="symbol">❌</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="slot-wrapper">
-                            <div className="slot" id="slot2">
-                                <div className="reel">
-                                    <div className="symbol">✏️</div>
-                                    <div className="symbol">🧠</div>
-                                    <div className="symbol">🎓</div>
-                                    <div className="symbol">🔥</div>
-                                    <div className="symbol">💯</div>
-                                    <div className="symbol">❌</div>
-                                    <div className="symbol">📚</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="slot-wrapper">
-                            <div className="slot" id="slot3">
-                                <div className="reel">
-                                    <div className="symbol">🧠</div>
-                                    <div className="symbol">🎓</div>
-                                    <div className="symbol">🔥</div>
-                                    <div className="symbol">💯</div>
-                                    <div className="symbol">❌</div>
-                                    <div className="symbol">📚</div>
-                                    <div className="symbol">✏️</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="win-message" id="win-message" />
-                    <div className="bet-section">
-                        <h3>Выберите ставку</h3>
-                        <div className="bet-buttons">
-                            <button
-                                className="bet-btn active"
-                                data-bet={10}
-                                >
-                                <span className="bet-amount">10</span>
-                                <span className="bet-label">баллов</span>
-                            </button>
-                            <button
-                                className="bet-btn"
-                                data-bet={50}
-                                >
-                                <span className="bet-amount">50</span>
-                                <span className="bet-label">баллов</span>
-                            </button>
-                            <button
-                                className="bet-btn"
-                                data-bet={100}
-                                >
-                                <span className="bet-amount">100</span>
-                                <span className="bet-label">баллов</span>
-                            </button>
-                        </div>
-                    </div>
-                    <button className="spin-btn" id="spin-btn" >
-                        <span className="spin-text">КРУТИТЬ</span>
-                        <span className="spin-cost">Стоимость: 10 баллов</span>
-                    </button>
-                </div>
+                
+                <GameScreen />
+
                 <div className="payout-table">
                     <h3>Таблица выигрышей</h3>
                     <div className="payout-grid">

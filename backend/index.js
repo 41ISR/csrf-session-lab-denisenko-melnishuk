@@ -16,6 +16,8 @@ const ERROR_MESSAGE = {
     regUsernameExists: "Пользователь с таким именем уже существует",
     unexcepted: "Произошла ошибка, попробуйте снова",
     unauth: "Вы не вошли в аккаунт",
+    wrongbet: "Указана неправильная ставка",
+    lowbalance: "Недостаточно средств",
 }
 
 const PAYOUTS = {
@@ -71,8 +73,9 @@ const csrfMiddleware = csrf({
     }
 })
 
-const getResult = () => {
-    
+const getMulti = (symbols) => {
+    const combo = symbols.join('')
+    return PAYOUTS[combo] || 0
 }
 
 // ----------
@@ -111,11 +114,11 @@ app.post('/auth/signup', (req, res) => {
         
         res.status(201).json({message: "Пользователь успешно создан", user: newUser})
     } catch (error) {
-        console.error(error);
+        
         if(error.message == "lost") return res.status(400).json({error: ERROR_MESSAGE.notAllData})
         else if(error.message == "email") return res.status(400).json({error: ERROR_MESSAGE.regEmailExists})
         else if(error.message == "username") return res.status(400).json({error: ERROR_MESSAGE.regUsernameExists})
-        else return res.status(400).json({error: ERROR_MESSAGE.unexcepted})
+        else {console.error(error); ;return res.status(400).json({error: ERROR_MESSAGE.unexcepted})}
     }
 })
 
@@ -136,10 +139,9 @@ app.post('/auth/signin', (req, res) => {
 
         res.status(200).json({message: 'Успешный вход в систему', user: user})
     } catch (error) {
-        console.error(error);
         if(error.message == "lost") return res.status(400).json({error: ERROR_MESSAGE.notAllData})
         else if(error.message == "wrong") return res.status(400).json({error: ERROR_MESSAGE.authError})
-        else return res.status(400).json({error: ERROR_MESSAGE.unexcepted})
+        else {console.error(error); ;return res.status(400).json({error: ERROR_MESSAGE.unexcepted})}
     }
 })
 
@@ -165,9 +167,8 @@ app.get('/profile', (req, res) => {
         return res.status(200).json({id: userId, username: username, email: email, balance: user.balance})
         
     } catch (error) {
-        console.error(error);
         if(error.message == 'unauth') return res.status(401).json({error: ERROR_MESSAGE.unauth})
-        else return res.status(400).json({error: ERROR_MESSAGE.unexcepted})
+        else {console.error(error); ;return res.status(400).json({error: ERROR_MESSAGE.unexcepted})}
     }
 })
 
@@ -183,8 +184,32 @@ app.get('/leaderboard', (_, res) => {
     }
 })
 
-app.post('/spin', (req, res) => {
+app.post('/spin', csrfMiddleware, (req, res) => {
+    try {
+        const {bet, csrfToken} = req.body
 
+        if(!csrfToken) throw new Error('unauth')
+        if(![10,50,100].includes(bet)) throw new Error('wrongbet')
+
+        const user = db.prepare(`
+            SELECT * FROM users WHERE id = ?`).get(req.session.userId)
+        if(user.balance < bet) throw new Error('lowbalance')
+
+        const resSymb = Array.from({length: 3}, () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)])
+        const mult = getMulti(resSymb)
+        const winAmount = mult * bet
+
+        const newBalance = user.balance - bet + winAmount
+        db.prepare(`
+            UPDATE users SET balance = ? WHERE id = ?`).run(newBalance, req.session.userId)
+
+        res.status(200).json({symbols: resSymb, winAmount, isWin: winAmount > 0, newBalance})
+    } catch (error) {
+        if(error.message == 'unauth') return res.status(401).json({error: ERROR_MESSAGE.unauth})
+        else if(error.message == 'wrongbet') return res.status(400).json({error: ERROR_MESSAGE.wrongbet})
+        else if(error.message == 'lowbalance') return res.status(400).json({error: ERROR_MESSAGE.lowbalance})
+        else {console.error(error); ;return res.status(400).json({error: ERROR_MESSAGE.unexcepted})}
+    }
 })
 
 // ----------
@@ -192,13 +217,13 @@ app.post('/spin', (req, res) => {
 app.listen('3000', () => {
     console.log(`Backend is running on 3000
 Endpoints:
-    /auth/signup    - Регистрация
-    /auth/signin    - Авторизация
-    /auth/logout    - Выход
-    /leaderboard    - Топ пользователей (по убыванию баланса)
-    /csrf-token     - Получение токена для запроса
-    /profile        - Получение текущего пользователя
-    /spin           - Крутите барабан
+    POST    /auth/signup    - Регистрация
+    POST    /auth/signin    - Авторизация
+    POST    /auth/logout    - Выход
+    GET     /leaderboard    - Топ пользователей (по убыванию баланса)
+    GET     /csrf-token     - Получение токена для запроса
+    GET     /profile        - Получение текущего пользователя
+    POST    /spin           - Крутите барабан
 `);
     
 })

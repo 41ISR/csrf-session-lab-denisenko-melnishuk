@@ -1,5 +1,8 @@
 import {useNavigate, Link} from "react-router-dom"
 import {useState} from "react"
+import Button from "../components/Button"
+import Input from "../components/Input"
+
 
 const Signin = () => {
     const navigate = useNavigate()
@@ -28,7 +31,7 @@ const Signin = () => {
             if (!res.ok) throw new Error(data.error)
 
             console.log(res)
-            navigate("/")
+            navigate("/game")
         } catch (error) {
             console.error(error)
             setError(error.message)
@@ -50,7 +53,7 @@ const Signin = () => {
             <form id="login-form" className="auth-form active" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Имя пользователя</label>
-                    <input 
+                    <Input 
                     type="text" 
                     name="username" 
                     placeholder="Введите имя" 
@@ -59,16 +62,16 @@ const Signin = () => {
                 </div>
                 <div className="form-group">
                     <label>Пароль</label>
-                    <input
+                    <Input
                         type="password"
                         name="password"
                         placeholder="Введите пароль"
                         required=""
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary">
                     Войти
-                </button>
+                </Button>
             </form>
             
         </div>

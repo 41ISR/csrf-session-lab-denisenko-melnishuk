@@ -1,5 +1,7 @@
 import {useNavigate, Link} from "react-router-dom"
 import {useState} from "react"
+import Button from "../components/Button"
+import Input from "../components/Input"
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -35,7 +37,7 @@ const Signup = () => {
             if (!res.ok) throw new Error(data.error)
 
             console.log(res)
-            navigate("/")
+            navigate("/game")
         } catch (error) {
             console.error(error)
             setError(error.message)
@@ -58,7 +60,7 @@ const Signup = () => {
             <form id="signup-form" className="auth-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Имя пользователя</label>
-                    <input
+                    <Input
                         type="text"
                         name="username"
                         placeholder="Придумайте имя"
@@ -67,7 +69,7 @@ const Signup = () => {
                 </div>
                 <div className="form-group">
                     <label>Email</label>
-                    <input
+                    <Input
                         type="email"
                         name="email"
                         placeholder="Введите email"
@@ -95,9 +97,9 @@ const Signup = () => {
                 <div className="form-group error">
                     {error}
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary">
                     Создать аккаунт
-                </button>
+                </Button>
             </form>
         </div>
     </div>

@@ -12,7 +12,8 @@ export const router = createBrowserRouter ([
         path: "/",
         element: <AuthProvider />,
         children: [{
-            index: true,
+            // index: true,
+            path: "/game",
             element: <Index />
         },
 
