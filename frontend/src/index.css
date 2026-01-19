@@ -246,6 +246,7 @@ body {
 }
 
 .win-message {
+    display: none;
     text-align: center;
     min-height: 60px;
     font-size: 2em;
@@ -253,6 +254,10 @@ body {
     color: #ffd700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     animation: pulse 1s infinite;
+}
+
+.win-message.active {
+    display: block;
 }
 
 @keyframes pulse {

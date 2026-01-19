@@ -69,7 +69,8 @@ const csrfMiddleware = csrf({
     cookie: {
         httpOnly: false,
         sameSite: 'none',
-        secure: true
+        secure: true,
+        // domain: undefined
     }
 })
 

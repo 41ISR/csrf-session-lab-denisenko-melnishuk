@@ -2,6 +2,7 @@ import useAppStore from "../store/useAppStore"
 import useAuthStore from "../store/useAuthStore"
 import { useEffect } from "react"
 import {Link} from "react-router-dom"
+import Player from "../components/Player"
 
 const Leaderboard = () => {
     const {leaderboard, setLeaderboard} = useAppStore()
@@ -50,11 +51,12 @@ const Leaderboard = () => {
                     <span>Баллы</span>
                 </div>
                 {leaderboard.map((el, index) => (
-                    <div key={index} className={`leaderboard-row rank-${index+1} ${user.username == el.username ? 'highlight' : undefined}`}>
-                        <span className="rank">#{index+1}</span>
-                        <span className="player">{el.username}</span>
-                        <span className="score">{el.balance}</span>
-                    </div>
+                    // <div key={index} className={`leaderboard-row rank-${index+1} ${user.username == el.username ? 'highlight' : undefined}`}>
+                    //     <span className="rank">#{index+1}</span>
+                    //     <span className="player">{el.username}</span>
+                    //     <span className="score">{el.balance}</span>
+                    // </div>
+                    <Player {...el} index={index} />
                 ))}
                 
                 
