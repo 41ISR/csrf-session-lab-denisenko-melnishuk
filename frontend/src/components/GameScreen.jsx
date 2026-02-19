@@ -24,7 +24,7 @@ const GameScreen = () => {
         setWinMessage('')
 
         try {
-            const res = await fetch("https://effective-tribble-v6q4r975rv6vf6gvv-3000.app.github.dev/spin", {
+            const res = await fetch(`${import.meta.env.BACK_SECRET}/spin`, {
                 method: "POST",
                 body: JSON.stringify({bet: currentBet, csrfToken}),
                 headers:{

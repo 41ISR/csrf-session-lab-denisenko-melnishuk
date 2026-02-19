@@ -10,7 +10,7 @@ const Leaderboard = () => {
 
     const updBoard = async () => {
         try {
-            const data = await fetch("https://effective-tribble-v6q4r975rv6vf6gvv-3000.app.github.dev/leaderboard", {
+            const data = await fetch(`${import.meta.env.BACK_SECRET}/leaderboard`, {
             method: "GET",
             headers:{
                 "Content-Type": "application/json"

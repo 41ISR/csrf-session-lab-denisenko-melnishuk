@@ -17,7 +17,7 @@ const Signin = () => {
         }
         
         try {
-            const res = await fetch("https://effective-tribble-v6q4r975rv6vf6gvv-3000.app.github.dev/auth/signin", {
+            const res = await fetch(`${import.meta.env.BACK_SECRET}/auth/signin`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
