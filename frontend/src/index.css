@@ -64,9 +64,7 @@ body {
     border-color: #ffd700;
 }
 
-.auth-form {
-    /* display: none; */
-}
+
 
 .auth-form.active {
     display: block;
