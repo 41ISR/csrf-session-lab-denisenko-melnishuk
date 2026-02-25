@@ -1,5 +1,11 @@
 ## Техническое задание для студентов
-https://prod.liveshare.vsengsaas.visualstudio.com/join?C3F76969EDFCFA7C0C0E342955CAD616C648
+
+https://gist.github.com/sasha-melok/d214db5054ff4ec7f2dbc291cff24fad
+
+https://effective-tribble-v6q4r975rv6vf6gvv-5173.app.github.dev/
+
+https://effective-tribble-v6q4r975rv6vf6gvv-3000.app.github.dev/
+
 ### Проект: То самое
 
 Вам дан мокап приложения, который вы должны переписать на React. В папке mockup лежит готовый проект, который можно пощупать (поднять через `npx live-server`) и в папке jsx лежит готовая верстка под React. Ваша задача разбить его на компоненты и написать логику.
