@@ -5,7 +5,7 @@ const useAuthStore = create((set, get) => ({
     csrfToken: undefined,
     checkAuth: async () => {
         try {
-            const res = await fetch(`${import.meta.env.BACK_SECRET}/profile`, {
+            const res = await fetch(`${import.meta.env.VITE_BACK_SECRET}/profile`, {
                 method: "GET",
                 headers:{
                     "Content-Type": "application/json"
@@ -30,7 +30,7 @@ const useAuthStore = create((set, get) => ({
     },
     getToken: async () => {
         try {
-            const data = await fetch(`${import.meta.env.BACK_SECRET}/csrf-token`, {
+            const data = await fetch(`${import.meta.env.VITE_BACK_SECRET}/csrf-token`, {
                 method: "GET",
                 headers:{
                     "Content-Type": "application/json"

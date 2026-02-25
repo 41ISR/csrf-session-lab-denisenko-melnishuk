@@ -23,7 +23,7 @@ const Signup = () => {
         console.log(user)
 
         try {
-            const res = await fetch(`${import.meta.env.BACK_SECRET}/auth/signup`, {
+            const res = await fetch(`${import.meta.env.VITE_BACK_SECRET}/auth/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

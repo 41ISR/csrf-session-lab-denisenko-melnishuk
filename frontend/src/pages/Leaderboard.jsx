@@ -10,7 +10,7 @@ const Leaderboard = () => {
 
     const updBoard = async () => {
         try {
-            const data = await fetch(`${import.meta.env.BACK_SECRET}/leaderboard`, {
+            const data = await fetch(`${import.meta.env.VITE_BACK_SECRET}/leaderboard`, {
             method: "GET",
             headers:{
                 "Content-Type": "application/json"

@@ -7,7 +7,7 @@ const Logout = () => {
     const navigate = useNavigate()
     useEffect(() => {
         const logUserOut = async () => {
-            await fetch(`${import.meta.env.BACK_SECRET}/auth/logout`, {
+            await fetch(`${import.meta.env.VITE_BACK_SECRET}/auth/logout`, {
                 credentials: "include"
             })
             clearUser()
