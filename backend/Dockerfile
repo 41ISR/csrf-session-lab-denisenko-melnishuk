@@ -1,4 +1,4 @@
-FROM Node:24
+FROM node:24
 WORKDIR .
 
 COPY package.json .
@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3000
 
-RUN ['npm', 'run', 'start']
+CMD ["npm", "run", "start"]
